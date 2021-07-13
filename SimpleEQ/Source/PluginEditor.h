@@ -11,6 +11,15 @@
 #include <JuceHeader.h>
 #include "PluginProcessor.h"
 
+struct CustomRotarySlider : juce::Slider
+{
+    CustomRotarySlider() : juce::Slider::SliderStyle::RotaryHorizontalVerticalDrag,
+                            juce::Slider::TextEntryBoxPosition::NoTextBox)
+        {
+
+        }
+};
+
 //==============================================================================
 /**
 */
@@ -28,6 +37,14 @@ private:
     // This reference is provided as a quick way for your editor to
     // access the processor object that created it.
     KarvaEQAudioProcessor& audioProcessor;
+
+    CustomRotarySlider peakFreqSlider,
+        peakGainSlider,
+        peakQualitySlider,
+        lowCutFreqSlider,
+        highCutFreqSlider;
+
+    std::vector<juce::Component*> getComps();
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (KarvaEQAudioProcessorEditor)
 };
