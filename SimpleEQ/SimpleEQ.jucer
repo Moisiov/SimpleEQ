@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<JUCERPROJECT id="OTVfzb" name="SimpleEQ" projectType="audioplug" useAppConfig="0"
-              addUsingNamespaceToJuceHeader="0" displaySplashScreen="1" jucerFormatVersion="1">
-  <MAINGROUP id="NpFM2y" name="SimpleEQ">
+<JUCERPROJECT id="OTVfzb" name="KarvaEQ" projectType="audioplug" useAppConfig="0"
+              addUsingNamespaceToJuceHeader="0" displaySplashScreen="1" jucerFormatVersion="1"
+              pluginManufacturer="Karvarinkeli">
+  <MAINGROUP id="NpFM2y" name="KarvaEQ">
     <GROUP id="{68A0CA7C-E79A-61A9-99D3-4EF7A2F5AABC}" name="Source">
       <FILE id="V5zLO4" name="PluginProcessor.cpp" compile="1" resource="0"
             file="Source/PluginProcessor.cpp"/>
@@ -17,8 +18,8 @@
   <EXPORTFORMATS>
     <VS2019 targetFolder="Builds/VisualStudio2019">
       <CONFIGURATIONS>
-        <CONFIGURATION isDebug="1" name="Debug" targetName="SimpleEQ"/>
-        <CONFIGURATION isDebug="0" name="Release" targetName="SimpleEQ"/>
+        <CONFIGURATION isDebug="1" name="Debug" targetName="KarvaEQ"/>
+        <CONFIGURATION isDebug="0" name="Release" targetName="KarvaEQ"/>
       </CONFIGURATIONS>
       <MODULEPATHS>
         <MODULEPATH id="juce_audio_basics" path="../../../JUCE/modules"/>
