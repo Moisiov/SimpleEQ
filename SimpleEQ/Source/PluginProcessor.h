@@ -92,6 +92,13 @@ private:
     using Coefficients = Filter::CoefficientsPtr;
     static void updateCoefficients(Coefficients& old, const Coefficients& replacements);
 
+    template<int Index, typename ChainType, typename CoefficientType>
+    void update(ChainType& chain, const CoefficientType& coefficients)
+    {
+        updateCoefficients(chain.template get<Index>().coefficients, coefficients[Index]);
+        chain.template setBypassed<Index>(false);
+    }
+
     template<typename ChainType, typename CoefficientType>
     void updateCutFilter(ChainType& lowCut,
         const CoefficientType& cutCoefficients,
@@ -105,34 +112,14 @@ private:
         // use for loop instead?
         switch (slope)
         {
-        case Slope_12:
-            *lowCut.template get<0>().coefficients = *cutCoefficients[0];
-            lowCut.template setBypassed<0>(false);
-            break;
-        case Slope_24:
-            *lowCut.template get<0>().coefficients = *cutCoefficients[0];
-            lowCut.template setBypassed<0>(false);
-            *lowCut.template get<1>().coefficients = *cutCoefficients[1];
-            lowCut.template setBypassed<1>(false);
-            break;
-        case Slope_36:
-            *lowCut.template get<0>().coefficients = *cutCoefficients[0];
-            lowCut.template setBypassed<0>(false);
-            *lowCut.template get<1>().coefficients = *cutCoefficients[1];
-            lowCut.template setBypassed<1>(false);
-            *lowCut.template get<2>().coefficients = *cutCoefficients[2];
-            lowCut.template setBypassed<2>(false);
-            break;
         case Slope_48:
-            *lowCut.template get<0>().coefficients = *cutCoefficients[0];
-            lowCut.template setBypassed<0>(false);
-            *lowCut.template get<1>().coefficients = *cutCoefficients[1];
-            lowCut.template setBypassed<1>(false);
-            *lowCut.template get<2>().coefficients = *cutCoefficients[2];
-            lowCut.template setBypassed<2>(false);
-            *lowCut.template get<3>().coefficients = *cutCoefficients[3];
-            lowCut.template setBypassed<3>(false);
-            break;
+            update<3>(lowCut, cutCoefficients);
+        case Slope_36:
+            update<2>(lowCut, cutCoefficients);
+        case Slope_24:
+            update<1>(lowCut, cutCoefficients);
+        case Slope_12:
+            update<0>(lowCut, cutCoefficients);
         }
     }
 
