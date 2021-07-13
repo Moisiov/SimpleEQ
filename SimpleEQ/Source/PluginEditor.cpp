@@ -10,8 +10,16 @@
 #include "PluginEditor.h"
 
 //==============================================================================
-KarvaEQAudioProcessorEditor::KarvaEQAudioProcessorEditor (KarvaEQAudioProcessor& p)
-    : AudioProcessorEditor (&p), audioProcessor (p)
+KarvaEQAudioProcessorEditor::KarvaEQAudioProcessorEditor(KarvaEQAudioProcessor& p)
+    : AudioProcessorEditor(&p),
+    audioProcessor(p),
+    peakFreqSliderAttachment(audioProcessor.apvts, "Peak freq", peakFreqSlider),
+    peakGainSliderAttachment(audioProcessor.apvts, "Peak gain", peakGainSlider),
+    peakQualitySliderAttachment(audioProcessor.apvts, "Peak quality", peakQualitySlider),
+    lowCutFreqSliderAttachment(audioProcessor.apvts, "LowCut freq", lowCutFreqSlider),
+    highCutFreqSliderAttachment(audioProcessor.apvts, "HighCut freq", highCutFreqSlider),
+    lowCutSlopeSliderAttachment(audioProcessor.apvts, "LowCut slope", lowCutSlopeSlider),
+    highCutSlopeSliderAttachment(audioProcessor.apvts, "HighCut slope", highCutSlopeSlider)
 {
     // Make sure that before the constructor has finished, you've set the
     // editor's size to whatever you need it to be.
