@@ -92,7 +92,7 @@ void KarvaEQAudioProcessorEditor::paint (juce::Graphics& g)
 
     for (size_t i = 1; i < mags.size(); ++i)
     {
-        responseCurve.lineTo(responseArea.getX() + 1, map(mags[i]));
+        responseCurve.lineTo(responseArea.getX() + i, map(mags[i]));
     }
 
     g.setColour(Colours::yellow);
