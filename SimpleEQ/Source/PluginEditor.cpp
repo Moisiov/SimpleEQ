@@ -126,8 +126,11 @@ void KarvaEQAudioProcessorEditor::resized()
     auto lowCutArea = bounds.removeFromLeft(bounds.getWidth() * 0.33);
     auto highCutArea = bounds.removeFromRight(bounds.getWidth() * 0.5);
 
-    lowCutFreqSlider.setBounds(lowCutArea);
-    highCutFreqSlider.setBounds(highCutArea);
+    lowCutFreqSlider.setBounds(lowCutArea.removeFromTop(lowCutArea.getHeight() * 0.5));
+    lowCutSlopeSlider.setBounds(lowCutArea);
+
+    highCutFreqSlider.setBounds(highCutArea.removeFromTop(highCutArea.getHeight() * 0.5));
+    highCutSlopeSlider.setBounds(highCutArea);
 
     peakFreqSlider.setBounds(bounds.removeFromTop(bounds.getHeight() * 0.33));
     peakGainSlider.setBounds(bounds.removeFromTop(bounds.getHeight() * 0.5));
@@ -151,6 +154,11 @@ void KarvaEQAudioProcessorEditor::timerCallback()
         auto chainSettings = getChainSettings(audioProcessor.apvts);
         auto peakCoefficients = makePeakFilter(chainSettings, audioProcessor.getSampleRate());
         updateCoefficients(monoChain.get<ChainPositions::Peak>().coefficients, peakCoefficients);
+
+        auto lowCutCoefficients = makeLowCutFilter(chainSettings, audioProcessor.getSampleRate());
+        auto highCutCoefficients = makeHighCutFilter(chainSettings, audioProcessor.getSampleRate());
+        updateCutFilter(monoChain.get<ChainPositions::LowCut>(), lowCutCoefficients, chainSettings.lowCutSlope);
+        updateCutFilter(monoChain.get<ChainPositions::HighCut>(), highCutCoefficients, chainSettings.highCutSlope);
         // signal repaint
         repaint();
     }
@@ -164,6 +172,8 @@ std::vector<juce::Component*> KarvaEQAudioProcessorEditor::getComps()
         &peakGainSlider,
         &peakQualitySlider,
         &lowCutFreqSlider,
-        &highCutFreqSlider
+        &highCutFreqSlider,
+        &lowCutSlopeSlider,
+        &highCutSlopeSlider
     };
 }
