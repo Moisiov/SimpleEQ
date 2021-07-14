@@ -120,6 +120,13 @@ void ResponseCurveComponent::paint(juce::Graphics& g)
 KarvaEQAudioProcessorEditor::KarvaEQAudioProcessorEditor(KarvaEQAudioProcessor& p)
     : AudioProcessorEditor(&p),
     audioProcessor(p),
+    peakFreqSlider(*audioProcessor.apvts.getParameter("Peak freq"), "Hz"),
+    peakGainSlider(*audioProcessor.apvts.getParameter("Peak gain"), "Hz"),
+    peakQualitySlider(*audioProcessor.apvts.getParameter("Peak quality"), ""),
+    lowCutFreqSlider(*audioProcessor.apvts.getParameter("LowCut freq"), "Hz"),
+    highCutFreqSlider(*audioProcessor.apvts.getParameter("HighCut freq"), "Hz"),
+    lowCutSlopeSlider(*audioProcessor.apvts.getParameter("LowCut slope"), "dB/Oct"),
+    highCutSlopeSlider(*audioProcessor.apvts.getParameter("HighCut slope"), "dB/Oct"),
     responseCurveComponent(audioProcessor),
     peakFreqSliderAttachment(audioProcessor.apvts, "Peak freq", peakFreqSlider),
     peakGainSliderAttachment(audioProcessor.apvts, "Peak gain", peakGainSlider),
