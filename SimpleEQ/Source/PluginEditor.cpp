@@ -121,6 +121,24 @@ void KarvaEQAudioProcessorEditor::resized()
     peakQualitySlider.setBounds(bounds);
 }
 
+void KarvaEQAudioProcessorEditor::parameterValueChanged(int parameterIndex, float newValue)
+{
+    parametersChanged.set(true);
+}
+
+void KarvaEQAudioProcessorEditor::parameterGestureChanged(int parameterIndex, bool gestureIsStarting)
+{
+}
+
+void KarvaEQAudioProcessorEditor::timerCallback()
+{
+    if (parametersChanged.compareAndSetBool(false, true))
+    {
+        // update monochain
+        // signal repaint
+    }
+}
+
 std::vector<juce::Component*> KarvaEQAudioProcessorEditor::getComps()
 {
     return
