@@ -57,7 +57,7 @@ void ResponseCurveComponent::paint(juce::Graphics& g)
     using namespace juce;
 
     // (Our component is opaque, so we must completely fill the background with a solid colour)
-    g.fillAll(Colours::black);
+    g.fillAll(Colour(177u, 153u, 201u));
 
     auto responseArea = getLocalBounds();
 
@@ -109,10 +109,10 @@ void ResponseCurveComponent::paint(juce::Graphics& g)
         responseCurve.lineTo(responseArea.getX() + i, map(mags[i]));
     }
 
-    g.setColour(Colours::yellow);
-    g.drawRoundedRectangle(responseArea.toFloat(), 4.f, 1.f);
-
-    g.setColour(Colours::white);
+    g.setColour(Colour(97u, 202u, 197u));
+    g.drawRoundedRectangle(responseArea.toFloat(), 4.f, 2.f);
+    
+    g.setColour(Colour(97u, 202u, 197u));
     g.strokePath(responseCurve, PathStrokeType(2.f));
 }
 
@@ -127,6 +127,11 @@ void RotarySliderWithLabels::paint(juce::Graphics& g)
     auto range = getRange();
 
     auto bounds = getSliderBounds();
+
+    g.setColour(Colours::red);
+    g.drawRect(getLocalBounds());
+    g.setColour(Colours::yellow);
+    g.drawRect(bounds);
 
     getLookAndFeel().drawRotarySlider(
         g,
@@ -143,7 +148,18 @@ void RotarySliderWithLabels::paint(juce::Graphics& g)
 
 juce::Rectangle<int> RotarySliderWithLabels::getSliderBounds() const
 {
-    return getLocalBounds();
+    auto bounds = getLocalBounds();
+
+    auto size = juce::jmin(bounds.getWidth(), bounds.getHeight());
+
+    size -= getTextHeight() * 2;
+
+    juce::Rectangle<int> r;
+    r.setSize(size, size);
+    r.setCentre(bounds.getCentreX(), 0);
+    r.setY(2);
+
+    return r;
 }
 
 //==============================================================================
@@ -185,7 +201,7 @@ KarvaEQAudioProcessorEditor::~KarvaEQAudioProcessorEditor()
 void KarvaEQAudioProcessorEditor::paint (juce::Graphics& g)
 {
     // (Our component is opaque, so we must completely fill the background with a solid colour)
-    g.fillAll(juce::Colours::black);
+    g.fillAll(juce::Colour(100u, 100u, 100u));
 }
 
 void KarvaEQAudioProcessorEditor::resized()
@@ -242,10 +258,10 @@ void LookAndFeel::drawRotarySlider(
 
     auto bounds = Rectangle<float>(x, y, width, height);
 
-    // g.setColour(Colour(151u, 216u, 234u));
+    //g.setColour(Colour(97u, 202u, 197u));
     //g.fillEllipse(bounds);
 
-    g.setColour(Colour(97u, 202u, 197u));
+    g.setColour(Colour(177u, 153u, 201u));
     g.drawEllipse(bounds, 1.f);
 
     auto center = bounds.getCentre();
