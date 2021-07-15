@@ -110,10 +110,10 @@ void ResponseCurveComponent::paint(juce::Graphics& g)
     }
 
     g.setColour(Colour(97u, 202u, 197u));
-    g.drawRoundedRectangle(responseArea.toFloat(), 4.f, 2.f);
+    g.drawRoundedRectangle(responseArea.toFloat(), 4.f, 4.f);
     
     g.setColour(Colour(97u, 202u, 197u));
-    g.strokePath(responseCurve, PathStrokeType(2.f));
+    g.strokePath(responseCurve, PathStrokeType(4.f));
 }
 
 
@@ -127,11 +127,6 @@ void RotarySliderWithLabels::paint(juce::Graphics& g)
     auto range = getRange();
 
     auto bounds = getSliderBounds();
-
-    g.setColour(Colours::red);
-    g.drawRect(getLocalBounds());
-    g.setColour(Colours::yellow);
-    g.drawRect(bounds);
 
     getLookAndFeel().drawRotarySlider(
         g,
@@ -148,7 +143,7 @@ void RotarySliderWithLabels::paint(juce::Graphics& g)
     auto center = bounds.toFloat().getCentre();
     auto radius = bounds.getWidth() * 0.5f;
 
-    g.setColour(Colour(0u, 172u, 1u));
+    g.setColour(Colour(97u, 202u, 197u));
     g.setFont(getTextHeight());
 
     auto numChoices = labels.size();
@@ -255,6 +250,24 @@ KarvaEQAudioProcessorEditor::KarvaEQAudioProcessorEditor(KarvaEQAudioProcessor& 
     peakFreqSlider.labels.add({ 0.f, "20 Hz" });
     peakFreqSlider.labels.add({ 1.f, "20 kHz" });
 
+    peakGainSlider.labels.add({ 0.f, "-24 dB" });
+    peakGainSlider.labels.add({ 1.f, "+24 dB" });
+
+    peakQualitySlider.labels.add({ 0.f, "0.1" });
+    peakQualitySlider.labels.add({ 1.f, "10.0" });
+
+    lowCutFreqSlider.labels.add({ 0.f, "20 Hz" });
+    lowCutFreqSlider.labels.add({ 1.f, "20 kHz" });
+
+    highCutFreqSlider.labels.add({ 0.f, "20 Hz" });
+    highCutFreqSlider.labels.add({ 1.f, "20 kHz" });
+
+    lowCutSlopeSlider.labels.add({ 0.f, "12 dB/Oct" });
+    lowCutSlopeSlider.labels.add({ 1.f, "48 dB/Oct" });
+
+    highCutSlopeSlider.labels.add({ 0.f, "12 dB/Oct" });
+    highCutSlopeSlider.labels.add({ 1.f, "48 dB/Oct" });
+
     for (auto* comp : getComps())
     {
         addAndMakeVisible(comp);
@@ -271,7 +284,7 @@ KarvaEQAudioProcessorEditor::~KarvaEQAudioProcessorEditor()
 void KarvaEQAudioProcessorEditor::paint (juce::Graphics& g)
 {
     // (Our component is opaque, so we must completely fill the background with a solid colour)
-    g.fillAll(juce::Colour(100u, 100u, 100u));
+    g.fillAll(juce::Colour(0u, 0u, 0u));
 }
 
 void KarvaEQAudioProcessorEditor::resized()
@@ -363,10 +376,10 @@ void LookAndFeel::drawRotarySlider(
         r.setSize(strWidth + 4, rswl->getTextHeight() + 2);
         r.setCentre(bounds.getCentre());
 
-        g.setColour(Colours::black);
-        g.fillRect(r);
+        //g.setColour(Colours::black);
+        //g.fillRect(r);
 
-        g.setColour(Colours::white);
+        g.setColour(Colour(97u, 202u, 197u));
         g.drawFittedText(text, r.toNearestInt(), juce::Justification::verticallyCentred, 1);
     }
 }
