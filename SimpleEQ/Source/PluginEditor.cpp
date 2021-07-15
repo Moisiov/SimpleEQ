@@ -144,6 +144,32 @@ void RotarySliderWithLabels::paint(juce::Graphics& g)
         endAng,
         *this
     );
+
+    auto center = bounds.toFloat().getCentre();
+    auto radius = bounds.getWidth() * 0.5f;
+
+    g.setColour(Colour(0u, 172u, 1u));
+    g.setFont(getTextHeight());
+
+    auto numChoices = labels.size();
+    for (int i = 0; i < numChoices; ++i)
+    {
+        auto pos = labels[i].pos;
+        jassert(0.f <= pos);
+        jassert(pos <= 1.f);
+
+        auto ang = jmap(pos, 0.f, 1.f, startAng, endAng);
+
+        auto c = center.getPointOnCircumference(radius + getTextHeight() * 0.5f + 1, ang);
+
+        Rectangle<float> r;
+        auto str = labels[i].label;
+        r.setSize(g.getCurrentFont().getStringWidth(str), getTextHeight());
+        r.setCentre(c);
+        r.setY(r.getY() + getTextHeight());
+
+        g.drawFittedText(str, r.toNearestInt(), juce::Justification::centred, 1);
+    }
 }
 
 juce::Rectangle<int> RotarySliderWithLabels::getSliderBounds() const
@@ -225,6 +251,9 @@ KarvaEQAudioProcessorEditor::KarvaEQAudioProcessorEditor(KarvaEQAudioProcessor& 
 {
     // Make sure that before the constructor has finished, you've set the
     // editor's size to whatever you need it to be.
+
+    peakFreqSlider.labels.add({ 0.f, "20 Hz" });
+    peakFreqSlider.labels.add({ 1.f, "20 kHz" });
 
     for (auto* comp : getComps())
     {
